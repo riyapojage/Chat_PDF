@@ -5,8 +5,8 @@ from functions import (DocumentLoader, add_message_to_history,
                        configure_qa_chain, display_chat_history,
                        initialize_chat_history, process_user_query)
 
-st.set_page_config(page_title="Chate con un documento", page_icon="🦜")
-st.title("📚 Chatea con un documento")
+st.set_page_config(page_title="Chat with PDF", page_icon="🦜")
+st.title("📚 Chat with PDF")
 
 uploaded_files = st.sidebar.file_uploader(
     label="Upload files",

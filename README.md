@@ -26,11 +26,23 @@ To install and set up Chat_PDF locally, follow these steps:
 
    Make sure you have [Python](https://www.python.org/downloads/) installed. Then, install the required packages using pip:
 
-   ```bash
-   pip install -r requirements.txt
+```bash
+pip install -r requirements_essential.txt
+```
+
+3. **Set up API Key**:
+
+   You need a Google Gemini API key to use this application:
+   
+   1. Visit the [Google AI Studio](https://ai.google.dev/) and sign in
+   2. Go to the API Keys section and create a new API key
+   3. Create a `.env` file in the root directory with your API key:
+
+   ```
+   GOOGLE_API_KEY=your_api_key_here
    ```
 
-3. **Run the Application**:
+4. **Run the Application**:
 
    Start the application using Streamlit:
 

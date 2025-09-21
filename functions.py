@@ -25,12 +25,11 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 # ================================================================
 
 def set_environment():
-    """Set environment variables for API keys and IDs."""
-    for key, value in globals().items():
-        if "API" in key or "ID" in key:
-            os.environ[key] = value
-            
-GOOGLE_API_KEY= 'your_google_api_key'
+    """Load environment variables from .env file."""
+    from dotenv import load_dotenv
+    load_dotenv()
+
+# Load API key from environment variable
 set_environment()
 
 # ================================================================
@@ -98,7 +97,7 @@ def configure_retriever(docs: List[Document], use_compression=False) -> BaseRetr
 def configure_chain(retriever: BaseRetriever) -> ConversationalRetrievalChain:
     """Configure the conversational chain with a retriever."""
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro", temperature=0)
+    llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro", temperature=0, google_api_key=os.environ.get("GOOGLE_API_KEY"))
 
     return ConversationalRetrievalChain.from_llm(
         llm, retriever=retriever, memory=memory, verbose=True, max_tokens_limit=4000
@@ -146,11 +145,11 @@ def process_user_query(qa_chain, user_query):
     """Process the user's query and return the assistant's response."""
     assistant = st.chat_message("assistant")
     template = PromptTemplate(
-        input_variables=["pregunta", "lenguaje"],
-        template="Contesta a la siguiente pregunta: {pregunta} en {lenguaje}"
+        input_variables=["question", "language"],
+        template="Answer the following question: {question} in {language}"
     )
 
-    prompt = template.format(pregunta=user_query, lenguaje="español")
+    prompt = template.format(question=user_query, language="english")
 
     stream_handler = StreamlitCallbackHandler(assistant)
     response = qa_chain.run(prompt, callbacks=[stream_handler])
