@@ -27,7 +27,7 @@ To install and set up Chat_PDF locally, follow these steps:
    Make sure you have [Python](https://www.python.org/downloads/) installed. Then, install the required packages using pip:
 
 ```bash
-pip install -r requirements_essential.txt
+pip install -r requirements.txt
 ```
 
 3. **Set up API Key**:
